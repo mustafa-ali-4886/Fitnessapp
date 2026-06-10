@@ -9,19 +9,7 @@ html, body {
     box-sizing: inherit;
 }
 
-img, video, iframe {
-    max-width: 100% !important;
-    height: auto !important;
-}
 
-/* Fix background banner images/videos getting squished by the above rule */
-.banner img, .banner video {
-    height: 100% !important;
-    object-fit: cover !important;
-    position: absolute !important;
-    top: 0;
-    left: 0;
-}
 
 /* Mobile Menu Icon Base */
 .mobile-menu-icon {
@@ -33,6 +21,20 @@ img, video, iframe {
 }
 
 @media screen and (max-width: 900px) {
+    img, video, iframe {
+        max-width: 100% !important;
+        height: auto !important;
+    }
+
+    /* Fix background banner images/videos getting squished by the above rule */
+    .banner img, .banner video {
+        height: 100% !important;
+        object-fit: cover !important;
+        position: absolute !important;
+        top: 0;
+        left: 0;
+    }
+
     /* Navbar fixes (Hamburger Menu) */
     .navbar {
         display: flex !important;
