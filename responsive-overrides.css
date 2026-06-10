@@ -28,25 +28,30 @@ img, video, iframe {
     .navbar {
         display: flex !important;
         flex-wrap: wrap !important;
-        justify-content: space-between !important;
+        justify-content: flex-start !important;
         align-items: center !important;
         padding: 15px 20px !important;
     }
     
     .logo {
-        flex: 1 !important;
+        flex: 0 1 auto !important;
         text-align: left !important;
         order: 1 !important;
+        margin: 0 !important;
+        padding: 0 !important;
     }
     
     .logo img {
-        height: 35px !important; /* Smaller logo as requested */
+        height: 30px !important; /* Smaller logo as requested */
+        width: auto !important;
+        max-width: 150px !important;
+        display: block !important;
     }
     
     .SignUp {
         display: inline-block !important;
         width: auto !important;
-        margin: 0 15px 0 0 !important;
+        margin: 0 15px 0 auto !important; /* auto margin pushes it to the right */
         padding: 6px 12px !important;
         font-size: 14px !important;
         order: 2 !important;
@@ -55,7 +60,9 @@ img, video, iframe {
     .mobile-menu-icon {
         display: block !important;
         order: 3 !important;
-        margin-right: 0 !important;
+        margin: 0 !important;
+        font-size: 24px !important;
+        width: auto !important;
     }
     
     .navigationbar {
@@ -64,7 +71,7 @@ img, video, iframe {
         flex-direction: column !important;
         text-align: center;
         gap: 15px !important;
-        margin: 20px 0 !important;
+        margin: 20px 0 0 0 !important;
         order: 4 !important;
     }
 
@@ -103,11 +110,18 @@ img, video, iframe {
         box-sizing: border-box !important;
     }
     
+    /* Trick to stack radio buttons and labels on mobile without changing HTML */
+    input[type="radio"] {
+        float: left !important;
+        margin-top: 4px !important;
+        margin-right: 10px !important;
+    }
+    
     .radio-label {
-        display: inline-block !important;
+        display: block !important;
+        margin-left: 25px !important;
+        margin-bottom: 15px !important;
         width: auto !important;
-        margin-right: 15px !important;
-        margin-bottom: 10px !important;
     }
 
     section, .section, .container, .wrapper {
