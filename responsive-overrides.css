@@ -36,14 +36,26 @@ img, video, iframe {
     .logo {
         flex: 1 !important;
         text-align: left !important;
+        order: 1 !important;
     }
     
     .logo img {
         height: 35px !important; /* Smaller logo as requested */
     }
     
+    .SignUp {
+        display: inline-block !important;
+        width: auto !important;
+        margin: 0 15px 0 0 !important;
+        padding: 6px 12px !important;
+        font-size: 14px !important;
+        order: 2 !important;
+    }
+
     .mobile-menu-icon {
         display: block !important;
+        order: 3 !important;
+        margin-right: 0 !important;
     }
     
     .navigationbar {
@@ -53,16 +65,10 @@ img, video, iframe {
         text-align: center;
         gap: 15px !important;
         margin: 20px 0 !important;
-    }
-    
-    .SignUp {
-        display: none !important;
-        width: 100% !important;
-        margin: 10px 0 !important;
-        text-align: center;
+        order: 4 !important;
     }
 
-    .navigationbar.active, .SignUp.active {
+    .navigationbar.active {
         display: flex !important;
     }
 
@@ -91,10 +97,17 @@ img, video, iframe {
         padding: 8px 0 !important;
     }
     
-    .form-input, .generate-plan-btn, .radio-label {
+    .form-input, .generate-plan-btn {
         width: 100% !important;
         max-width: 100% !important;
         box-sizing: border-box !important;
+    }
+    
+    .radio-label {
+        display: inline-block !important;
+        width: auto !important;
+        margin-right: 15px !important;
+        margin-bottom: 10px !important;
     }
 
     section, .section, .container, .wrapper {

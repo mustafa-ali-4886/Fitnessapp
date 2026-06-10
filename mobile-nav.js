@@ -16,7 +16,6 @@ document.addEventListener("DOMContentLoaded", function() {
             
             hamburger.addEventListener('click', function() {
                 navMenu.classList.toggle('active');
-                if (signUpBtn) signUpBtn.classList.toggle('active');
             });
         }
     });
