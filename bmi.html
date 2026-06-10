@@ -126,6 +126,12 @@
       gap: 18px;
       animation: slideUp 0.7s 0.22s cubic-bezier(0.4, 0, 0.2, 1) both;
     }
+    
+    @media (max-width: 850px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
 
     .panel {
       background: var(--card);
