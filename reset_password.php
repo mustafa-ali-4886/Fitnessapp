@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 session_start();
 
 if (!isset($_SESSION['otp_verified']) || $_SESSION['otp_verified'] !== true || !isset($_SESSION['reset_email'])) {
@@ -58,6 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['new_password']) && iss
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="responsive-overrides.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reset Password</title>
@@ -233,3 +234,4 @@ function hpCalcBMI() {
 }</script>
 </body>
 </html>
+

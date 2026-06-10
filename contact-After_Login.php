@@ -35,6 +35,7 @@ mysqli_close($conn);
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="responsive-overrides.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Us – Zero Fitness</title>
@@ -890,4 +891,5 @@ async function sendMessage() {
 
 </body>
 </html>
+
 

@@ -35,6 +35,7 @@ mysqli_close($conn);
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+    <link rel="stylesheet" href="responsive-overrides.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta charset="utf-8">
 <title>About Us - ZeroFitness</title>
@@ -48,6 +49,7 @@ mysqli_close($conn);
 
 <!-- Navigation Header -->
 <header class="hero">
+    <link rel="stylesheet" href="responsive-overrides.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<nav class="navbar">
 		<div class="logo">
@@ -243,6 +245,7 @@ mysqli_close($conn);
 <script src="zf-animations.js"></script>
 </body>
 </html>
+
 
 
 

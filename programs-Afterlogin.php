@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 session_start();
 
 if (!isset($_SESSION['email'])) {
@@ -34,6 +34,7 @@ mysqli_close($conn);
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="responsive-overrides.css">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Fitness Programs - ZeroFitness</title>
@@ -45,6 +46,7 @@ mysqli_close($conn);
 <body>
 
 <header class="hero">
+    <link rel="stylesheet" href="responsive-overrides.css">
 <nav class="navbar">
 		<div class="logo">
 			<img src="Logo-v2.png" alt="logo">
@@ -642,3 +644,4 @@ function resetForm() {
 
 </body>
 </html>
+

@@ -35,6 +35,7 @@ mysqli_close($conn);
 <!doctype html>
 <html>
 <head>
+    <link rel="stylesheet" href="responsive-overrides.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="icon" type="image/x-icon" href="favicon.png">
 	<link rel="stylesheet" href="Style_2.css">
@@ -44,6 +45,7 @@ mysqli_close($conn);
 <body>
 
 <header class="hero">
+    <link rel="stylesheet" href="responsive-overrides.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<nav class="navbar">
 		<div class="logo">
@@ -565,4 +567,5 @@ function hpCalcBMI() {
 </script>
 </body>
 </html>
+
 
