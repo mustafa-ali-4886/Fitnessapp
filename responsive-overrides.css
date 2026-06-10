@@ -27,6 +27,7 @@ img, video, iframe {
     /* Navbar fixes (Hamburger Menu) */
     .navbar {
         display: flex !important;
+        flex-direction: row !important;
         flex-wrap: wrap !important;
         justify-content: flex-start !important;
         align-items: center !important;
