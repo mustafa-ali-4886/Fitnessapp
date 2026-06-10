@@ -34,6 +34,19 @@ html, body {
         top: 0;
         left: 0;
     }
+    
+    /* Keep rating avatars small */
+    .Avatars img {
+        max-width: 120px !important;
+        height: auto !important;
+    }
+
+    /* Keep testimonial avatars as perfect circles */
+    .testimonial-avatar {
+        height: 80px !important;
+        width: 80px !important;
+        object-fit: cover !important;
+    }
 
     /* Navbar fixes (Hamburger Menu) */
     .navbar {
