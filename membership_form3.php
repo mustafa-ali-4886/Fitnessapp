@@ -326,7 +326,9 @@ function hpCalcBMI() {
   if(scale) scale.classList.add('show');
   if(dot) setTimeout(() => { dot.style.left = pct + '%'; }, 60);
 }</script>
+    <script src="mobile-nav.js"></script>
 </body>
 </html>
+
 
 

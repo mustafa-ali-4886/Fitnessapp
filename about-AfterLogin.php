@@ -243,8 +243,10 @@ mysqli_close($conn);
 
 
 <script src="zf-animations.js"></script>
+    <script src="mobile-nav.js"></script>
 </body>
 </html>
+
 
 
 

@@ -14,24 +14,56 @@ img, video, iframe {
     height: auto !important;
 }
 
+/* Mobile Menu Icon Base */
+.mobile-menu-icon {
+    display: none;
+    font-size: 28px;
+    color: white;
+    cursor: pointer;
+    margin-right: 15px;
+}
+
 @media screen and (max-width: 900px) {
-    /* Navbar fixes */
+    /* Navbar fixes (Hamburger Menu) */
     .navbar {
+        display: flex !important;
         flex-wrap: wrap !important;
-        justify-content: center !important;
-        padding: 15px !important;
-        gap: 15px !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+        padding: 15px 20px !important;
+    }
+    
+    .logo {
+        flex: 1 !important;
+        text-align: left !important;
+    }
+    
+    .logo img {
+        height: 35px !important; /* Smaller logo as requested */
+    }
+    
+    .mobile-menu-icon {
+        display: block !important;
     }
     
     .navigationbar {
-        flex-wrap: wrap !important;
-        justify-content: center !important;
-        gap: 10px !important;
-        margin: 10px 0 !important;
+        display: none !important; /* Hide by default on mobile */
+        width: 100% !important;
+        flex-direction: column !important;
+        text-align: center;
+        gap: 15px !important;
+        margin: 20px 0 !important;
     }
     
     .SignUp {
-        margin-left: 0 !important;
+        display: none !important;
+        width: 100% !important;
+        margin: 10px 0 !important;
+        text-align: center;
+    }
+
+    .navigationbar.active, .SignUp.active {
+        display: flex !important;
     }
 
     /* Program Rows and Feature Grids */
@@ -46,6 +78,23 @@ img, video, iframe {
         min-width: 100% !important;
         flex: 1 1 100% !important;
         margin-bottom: 20px !important;
+    }
+    
+    /* FIX: VIP Customizer Table Override */
+    table.form-table, .form-table tbody, .form-table tr, .form-table td {
+        display: block !important;
+        width: 100% !important;
+        text-align: left !important;
+    }
+    
+    .form-table td {
+        padding: 8px 0 !important;
+    }
+    
+    .form-input, .generate-plan-btn, .radio-label {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
     }
 
     section, .section, .container, .wrapper {
