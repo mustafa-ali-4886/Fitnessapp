@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<link rel="icon" type="image/x-icon" href="favicon.png">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+    content="width=device-width, initial-scale=1.0">
+
+    <title>Fitness Guide Register</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="stylesheet"
+    href="https://dribbble.com/shots/27230601-Website-Login-Page-Design">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="left-section">
+
+    </div>
+
+    <div class="right-section">
+
+        <div class="login-box reveal">
+
+            <div class="login-logo">
+                <img src="Logo-v2.png" alt="Fitness Logo">
+            </div>
+
+            <h1>Create Account</h1>
+
+            <p>
+                Register your account to continue
+            </p>
+
+            <form action="register.php" method="POST">
+
+
+                <label>Username</label>
+
+                <div class="input-box">
+
+                    <i class="fa-regular fa-user"></i>
+
+                    <input type="text"
+                    name="username"
+                    placeholder="Enter your username"
+                    required>
+
+                </div>
+
+                <label>Email Address</label>
+
+                <div class="input-box">
+
+                    <i class="fa-regular fa-envelope"></i>
+
+                    <input type="email"
+                    name="email"
+                    placeholder="you@example.com"
+                    required>
+
+                </div>
+
+                <label>Password</label>
+
+                <div class="input-box">
+
+                    <i class="fa-solid fa-lock"></i>
+
+                    <input type="password"
+                    name="password"
+                    placeholder="Enter your password"
+                    required>
+
+                </div>
+
+                <button type="submit"
+                class="login-btn">
+
+                    Register
+
+                </button>
+                <div class="register-link">
+
+                    Already have an account?
+
+                    <a href="login.html">
+                        Login
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+<script>
+(function () {
+
+  /* 1. LOGIN-BOX ENTRANCE — slides up on page load */
+  const loginBox = document.querySelector('.login-box.reveal');
+  if (loginBox) {
+    loginBox.style.opacity = '0';
+    loginBox.style.transform = 'translateY(40px) scale(0.97)';
+    loginBox.style.transition = 'opacity 0.6s cubic-bezier(0.22,1,0.36,1), transform 0.6s cubic-bezier(0.22,1,0.36,1)';
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        loginBox.style.opacity = '1';
+        loginBox.style.transform = 'translateY(0) scale(1)';
+      }, 80);
+    });
+  }
+
+  /* 2. INPUT FOCUS GLOW — glows when input is focused */
+  document.querySelectorAll('.input-box input').forEach((input) => {
+    const box = input.closest('.input-box');
+    if (!box) return;
+    box.style.transition = 'box-shadow 0.25s ease';
+    input.addEventListener('focus', () => box.style.boxShadow = '0 0 0 3px rgba(100,220,100,0.18)');
+    input.addEventListener('blur',  () => box.style.boxShadow = '');
+  });
+
+  /* 3. BUTTON RIPPLE — ripple effect on click */
+  document.querySelectorAll('.login-btn').forEach((btn) => {
+    btn.style.position = 'relative';
+    btn.style.overflow = 'hidden';
+    btn.addEventListener('click', function (e) {
+      const old = this.querySelector('.zf-ripple');
+      if (old) old.remove();
+      const r = document.createElement('span');
+      const rect = this.getBoundingClientRect();
+      const size = Math.max(rect.width, rect.height);
+      r.className = 'zf-ripple';
+      Object.assign(r.style, {
+        position: 'absolute', borderRadius: '50%',
+        background: 'rgba(255,255,255,0.28)',
+        width: size + 'px', height: size + 'px',
+        left: (e.clientX - rect.left - size / 2) + 'px',
+        top:  (e.clientY - rect.top  - size / 2) + 'px',
+        transform: 'scale(0)', pointerEvents: 'none',
+        animation: 'zfRipple 0.55s linear forwards'
+      });
+      this.appendChild(r);
+      r.addEventListener('animationend', () => r.remove());
+    });
+  });
+
+  /* Inject ripple keyframe once */
+  if (!document.getElementById('zf-ripple-style')) {
+    const s = document.createElement('style');
+    s.id = 'zf-ripple-style';
+    s.textContent = '@keyframes zfRipple { to { transform: scale(2.5); opacity: 0; } }';
+    document.head.appendChild(s);
+  }
+
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,248 @@
+﻿<?php
+session_start();
+
+if (!isset($_SESSION['email'])) {
+    header("Location: login.html");
+    exit();
+}
+
+$host = "localhost";
+$username = "root";
+$password = "";
+$database = "fitnessguide";
+
+$conn = mysqli_connect($host, $username, $password, $database);
+
+if (!$conn) {
+    die("Connection Failed: " . mysqli_connect_error());
+}
+
+$session_email = mysqli_real_escape_string($conn, $_SESSION['email']);
+
+$query = "SELECT username FROM users WHERE email = '$session_email'";
+$result = mysqli_query($conn, $query);
+
+$display_name = "User";
+if ($result && mysqli_num_rows($result) > 0) {
+    $user_data = mysqli_fetch_assoc($result);
+    $full_name = htmlspecialchars($user_data['username']);
+    $name_parts = explode(' ', trim($user_data['username']));
+    $display_name = htmlspecialchars($name_parts[0]);
+}
+
+mysqli_close($conn);
+?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8">
+<title>About Us - ZeroFitness</title>
+<link href="cssstyle.css" rel="stylesheet">
+<link rel="stylesheet" href="reveal-animations.css">
+<link rel="icon" type="image/x-icon" href="favicon.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+
+<body>
+
+<!-- Navigation Header -->
+<header class="hero">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<nav class="navbar">
+		<div class="logo">
+			<img src="Logo-v2.png" alt="logo">
+		</div>
+
+		<ul class="navigationbar">
+			<li><a href="index_AfterLogin.php">Home</a></li>
+			<li><a href="programs-Afterlogin.php">Programs</li>
+
+			<li class="has-dropdown">Products <i class="fa fa-chevron-down"></i>
+				<div class="dropdown-menu">
+					<a href="bmi-calculator-updated-afterlogin.php" class="dropdown-item">
+						<div>
+							<p class="dropdown-title">BMI Calculator</p>
+						</div>
+					</a>
+				</div>
+			</li>
+			<li><a href="membership_AfterLogin.php">Membership</a></li>
+			<li class = "active"><a href="about-AfterLogin.php">About Us</a></li>
+		</ul>
+
+			<div class="user-dropdown-container">
+   				 <input type="checkbox" id="profile-toggle" class="dropdown-state-checkbox">
+    
+    			<label for="profile-toggle" class="nav-avatar-trigger">
+       			 <img src="loginavatar.png" alt="User Profile" class="nav-avatar-img">
+        		<i class="fa fa-chevron-down chevron-icon"></i>
+    			</label>
+    
+    			<div class="profile-dropdown-menu">
+        		<div class="menu-user-header">
+            	<div class="avatar-status-wrapper">
+                <img src="loginavatar.png" alt="User Profile" class="menu-avatar-large">
+            	</div>
+            	<h3 class="menu-full-name"><?php echo $full_name; ?></h3>
+        		</div>
+        
+        <div class="menu-divider"></div>
+        
+        <div class="menu-actions">
+            <a href="index.html" class="logout-btn">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </a>
+        </div>
+    </div>
+</div>
+	</nav>
+</header>
+
+<div class="wrapper">
+
+    <!-- Page Title -->
+    <div class="page-header reveal">
+        <span class="tagline">Our Background</span>
+        <h1 class="main-heading">About ZeroFitness Center</h1>
+        <p class="sub-text">Uncompromising athletic system safety tracking and optimized performance targets.</p>
+    </div>
+
+    <!-- Gym Introduction Panel -->
+    <div class="introduction-card reveal">
+        <h3>Gym Introduction</h3>
+        ZeroFitness is an advanced tracking gym facility engineered to seamlessly tie professional workout configurations with analytical performance loops. Our layout structure enables athletes to break down structural weight parameters, refine compound metrics, and run fitness adjustments safely within a modern digital workspace.
+    </div>
+
+    <!-- Vision & Mission Block Panel Rows -->
+    <div class="mission-vision reveal-stagger">
+
+    <div class="split-box">
+        <h3>Our Mission</h3>
+        <p>
+            To provide high performance conditioning ecosystems paired
+            with data verification models, creating transparent pathways
+            toward long-term muscle health.
+        </p>
+    </div>
+
+    <div class="split-box">
+        <h3>Our Vision</h3>
+        <p>
+            To form a universally validated physical execution space
+            where routines are optimized according to certified
+            human metric analysis rules.
+        </p>
+    </div>
+
+</div>
+
+<div class="why-us reveal">
+
+    <h2>Why Choose ZeroFitness?</h2>
+
+    <div class="why-grid reveal-stagger">
+
+        <div class="why-card">
+            Certified Trainers
+        </div>
+
+        <div class="why-card">
+            Modern Equipment
+        </div>
+
+        <div class="why-card">
+            Personalized Plans
+        </div>
+
+        <div class="why-card">
+            Performance Tracking
+        </div>
+
+    </div>
+
+</div>
+
+    <!-- Certified Badges & Authentication System Layout -->
+    <div class="badge-container reveal">
+        <h3>Trainer Qualification &amp; Authentication Standards</h3>
+        <p style="color: #a0a0a0; font-size: 14px; margin: 5px 0 0 0; line-height:1.5;">To preserve absolute on-floor coaching excellence, all connected trainers fulfill verified metric certifications:</p>
+        
+        <ul class="badge-list">
+            <li>Fully certified via International Fitness Association (IFA) licensing bodies.</li>
+            <li>Possess official active Certified Personal Fitness Trainer (CPFT) badges.</li>
+            <li>Maintain a minimum requirement threshold of 5+ years verified structural field experience.</li>
+            <li>Operate under current verified local professional gym operations licensing rules.</li>
+            <li>Completely authenticated in advanced First Aid and Cardiopulmonary Resuscitation (CPR) life support metrics.</li>
+        </ul>
+        
+    </div>
+
+<div class="stats-section reveal-stagger">
+
+    <div class="stat-box">
+        <h2>500+</h2>
+        <p>Active Members</p>
+    </div>
+
+    <div class="stat-box">
+        <h2>25+</h2>
+        <p>Certified Trainers</p>
+    </div>
+
+    <div class="stat-box">
+        <h2>10+</h2>
+        <p>Years Experience</p>
+    </div>
+
+</div>
+
+<footer class="footer">
+    <div class="footer-inner">
+        <div class="footer-col">
+            <img src="Logo-v2.png" alt="ZF Logo" class="footer-logo-img">
+            <p class="footer-tagline">Your Fitness Journey Starts Here. We help you build strength, confidence, and a healthier life.</p>
+            <div class="vip-social-links">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+        <div class="footer-col">
+            <h4 class="footer-col-title">Quick Links</h4>
+            <ul class="footer-links">
+                <li><a href="membership.html">Membership</a></li>
+                <li><a href="programs.html">Programs</a></li>
+                <li><a href="bmi-calculator-updated.html">BMI Calculator</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4 class="footer-col-title">Services</h4>
+            <ul class="footer-links">
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4 class="footer-col-title">Newsletter</h4>
+            <p class="footer-tagline" style="margin-bottom: 0;">Subscribe for fitness tips and exclusive offers.</p>
+            <form class="vip-newsletter-form">
+                <input type="email" placeholder="Your Email Address" required>
+                <button type="submit"><i class="fa fa-paper-plane"></i></button>
+            </form>
+        </div>
+    </div>
+    <div class="footer-copy">
+        <p>Â© 2026 ZeroFitness. All rights reserved.</p>
+        <p style="margin: 0;">Designed for Excellence</p>
+    </div>
+</footer>
+
+
+<script src="zf-animations.js"></script>
+</body>
+</html>
+
+
+
