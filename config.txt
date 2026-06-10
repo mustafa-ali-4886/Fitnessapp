@@ -1,0 +1,18 @@
+# =========================================================================
+#  Finpro Contact Email Configuration
+# =========================================================================
+# 
+# To send real confirmation emails to the user's actual inbox:
+# 1. Fill your Gmail address below (EMAIL_USER).
+# 2. Fill your Google App Password below (EMAIL_PASS).
+#    (Do NOT write your regular Gmail password. App Password is a 16-character 
+#    password generated in your Google Account Security Settings. 
+#    Guide: https://support.google.com/accounts/answer/185833)
+# 
+# 3. Save this file, and restart the server!
+# 
+# =========================================================================
+
+EMAIL_USER=alimustufa4886@gmail.com
+EMAIL_PASS=kxdenbukrtidzjtr
+GEMINI_API_KEY=AIzaSyCCoxTnoILJqHrxf9LL_CoXU8hLEQ8TvOQ

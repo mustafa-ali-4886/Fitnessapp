@@ -1,0 +1,6 @@
+node_modules/
+.env
+*.log
+new_footer.txt
+replace_footer.ps1
+vip_footer_override.css
