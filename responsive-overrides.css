@@ -41,6 +41,9 @@ img, video, iframe {
         justify-content: flex-start !important;
         align-items: center !important;
         padding: 15px 20px !important;
+        background-color: #111111 !important; /* Solid dark background */
+        position: relative !important; /* Separate from banner */
+        z-index: 1000 !important;
     }
     
     .logo {
@@ -90,6 +93,11 @@ img, video, iframe {
     }
 
     /* FIX: Hero Text and Image for Home & Membership */
+    .banner {
+        top: 60px !important; /* Start banner exactly below the 60px navbar */
+        height: calc(100% - 60px) !important;
+    }
+
     .line-1, .line-2, .line-3, .pickyour, .perfectplan, .heading3 {
         font-size: 38px !important;
         line-height: 1.1 !important;
@@ -103,7 +111,9 @@ img, video, iframe {
     }
     
     .bannertext {
-        padding: 100px 15px 40px 15px !important;
+        padding: 50px 15px 40px 15px !important; /* Reduced padding-top since it's no longer under navbar */
+        position: relative !important;
+        z-index: 5 !important;
     }
 
     /* Make the background image fully visible instead of covered in black */
