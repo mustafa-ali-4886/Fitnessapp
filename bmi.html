@@ -72,9 +72,15 @@
     .wrapper {
       max-width: 980px;
       margin: 0 auto;
-      padding: 52px 32px 64px;
+      padding: 120px 32px 64px;
       position: relative;
       z-index: 1;
+    }
+    
+    @media (max-width: 768px) {
+      .wrapper {
+        padding-top: 30px !important;
+      }
     }
 
     /* HEADER */
@@ -1024,7 +1030,7 @@
     </div>
   </nav>
 
-  <div class="wrapper" style="padding-top: 100px;">
+  <div class="wrapper">
 
     <div class="header">
       <h1 class="page-title"><span style="color: var(--neon);">BODY</span> MASS INDEX CALCULATOR</h1>
