@@ -139,7 +139,7 @@ html, body {
         background: linear-gradient(to top, rgba(0,0,0,0.95) 10%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0.1) 100%) !important;
     }
     
-    .hero {
+    .hero:has(.banner) {
         min-height: 80vh !important;
     }
 
