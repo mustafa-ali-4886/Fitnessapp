@@ -617,7 +617,7 @@ function resetForm() {
             <ul class="footer-links">
                 <li><a href="membership.html">Membership</a></li>
                 <li><a href="programs.html">Programs</a></li>
-                <li><a href="bmi-calculator-updated.html">BMI Calculator</a></li>
+                <li><a href="bmi.html">BMI Calculator</a></li>
             </ul>
         </div>
         <div class="footer-col">
