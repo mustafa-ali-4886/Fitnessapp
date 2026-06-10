@@ -1,0 +1,1516 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="cssstyle.css">
+    <link rel="stylesheet" href="vip_footer_override.css">
+    <link rel="stylesheet" href="responsive-overrides.css?v=2">
+  <meta charset="UTF-8" />
+	<link rel="icon" type="image/x-icon" href="favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BMI Calculator</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    @font-face {
+      font-family: "TitleText";
+      src: url("ZalandoSansExpanded-VariableFont_wght.ttf");
+    }
+    @font-face {
+      font-family: "BodyText";
+      src: url("ZalandoSans-VariableFont_wdth,wght.ttf");
+    }
+  </style>
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --neon: #4EC901;
+      --white: #FFFFFF;
+      --black: #141514;
+      --grey: #CFDEDA;
+      --card: #1c1e1c;
+      --border: #2b2e2b;
+      --muted: #6b7a6b;
+      --input-bg: #101210;
+      --red: #e84040;
+      --yellow: #f0c040;
+      --blue: #4a90d9;
+    }
+
+    html,
+    body {
+      min-height: 100%;
+      background: var(--black);
+      color: var(--white);
+      font-family: 'BodyText', sans-serif;
+      overflow-x: hidden;
+    }
+
+    body {
+      animation: pageFade 0.65s cubic-bezier(0.4, 0, 0.2, 1) both;
+    }
+
+    @keyframes pageFade {
+      from {
+        opacity: 0;
+        transform: translateY(16px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* WRAPPER */
+    .wrapper {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 52px 32px 64px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* HEADER */
+    .header {
+      margin-bottom: 36px;
+      animation: slideUp 0.7s 0.1s cubic-bezier(0.4, 0, 0.2, 1) both;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(22px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .page-title {
+      font-family: 'TitleText', sans-serif;
+      font-size: clamp(28px, 5.2vw, 54px);
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      text-transform: uppercase;
+      line-height: 1.05;
+      color: var(--white);
+      margin-bottom: 14px;
+    }
+
+    .page-title .dot {
+      color: var(--neon);
+    }
+
+    .page-desc {
+      font-size: 14px;
+      color: #cccccc;
+      line-height: 1.75;
+      max-width: 580px;
+      font-weight: 400;
+      opacity: 1;
+    }
+
+    /* GRID */
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      animation: slideUp 0.7s 0.22s cubic-bezier(0.4, 0, 0.2, 1) both;
+    }
+
+    .panel {
+      background: var(--card);
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      padding: 28px 26px 30px;
+      transition: border-color 0.3s;
+    }
+
+    .panel:hover {
+      border-color: #3c3e3c;
+    }
+
+    .panel-title {
+      font-family: 'BodyText', sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: 0.3px;
+      color: var(--white);
+      margin-bottom: 26px;
+      text-transform: uppercase;
+    }
+
+    .panel-title .dot {
+      color: var(--neon);
+    }
+
+    /* FIELD LABEL */
+    .field-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: #cccccc;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 10px;
+    }
+
+    /* GENDER BUTTONS */
+    .gender-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+
+    .g-btn {
+      flex: 1;
+      padding: 10px 4px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+      font-family: 'BodyText', sans-serif;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: color 0.22s, border-color 0.22s;
+    }
+
+    .g-btn::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--neon);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.26s cubic-bezier(0.4, 0, 0.2, 1);
+      z-index: 0;
+      border-radius: 9px;
+    }
+
+    .g-btn span {
+      position: relative;
+      z-index: 1;
+    }
+
+    .g-btn.active::after {
+      transform: scaleX(1);
+    }
+
+    .g-btn.active {
+      color: var(--black);
+      border-color: var(--neon);
+    }
+
+    .g-btn:hover:not(.active) {
+      border-color: #4a4e4a;
+      color: var(--white);
+    }
+
+    /* INPUTS */
+    .input-wrap {
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .input-wrap input[type="number"],
+    .input-wrap input[type="email"] {
+      width: 100%;
+      background: var(--input-bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 13px 50px 13px 16px;
+      color: var(--white);
+      font-size: 13px;
+      font-family: 'BodyText', sans-serif;
+      font-weight: 500;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      -moz-appearance: textfield;
+    }
+
+    .input-wrap input[type="email"] {
+      padding: 13px 16px;
+    }
+
+    .input-wrap input::-webkit-outer-spin-button,
+    .input-wrap input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+    }
+
+    .input-wrap input::placeholder {
+      color: #3a3a3a;
+      font-size: 12px;
+    }
+
+    .input-wrap input:focus {
+      border-color: var(--neon);
+      box-shadow: 0 0 0 3px rgba(78, 201, 1, 0.09);
+    }
+
+    .input-unit {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 12px;
+      font-weight: 700;
+      color: #555;
+      pointer-events: none;
+      transition: color 0.2s;
+    }
+
+    .input-wrap input:focus~.input-unit {
+      color: var(--neon);
+    }
+
+    /* BUTTONS */
+    .calc-btn,
+    .send-btn {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 800;
+      font-family: 'BodyText', sans-serif;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      margin-top: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .calc-btn {
+      background: var(--neon);
+    }
+
+    .send-btn {
+      background: #4EC901;
+      color: #111;
+      margin-top: 12px;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: background-color 0.3s ease, color 0.3s ease, transform 0.15s;
+    }
+
+    .send-btn:hover {
+      background-color: #128700 !important;
+      color: #FFFFFF !important;
+      opacity: 1;
+      transform: none;
+    }
+
+    .send-btn.loading {
+      pointer-events: none;
+      opacity: 0.7;
+    }
+
+    .send-btn svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .send-btn.success {
+      background: var(--neon);
+    }
+
+    .send-btn.error {
+      background: var(--red);
+    }
+
+    .calc-btn::before,
+    .send-btn::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: rgba(0, 0, 0, 0.15);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.5s, height 0.5s, opacity 0.5s;
+      opacity: 0;
+    }
+
+    .calc-btn:active::before,
+    .send-btn:active::before {
+      width: 320px;
+      height: 320px;
+      opacity: 1;
+    }
+
+    .calc-btn:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+    }
+
+    .calc-btn:active,
+    .send-btn:active {
+      transform: scale(0.98);
+    }    /* RIGHT PANEL */
+    .result-panel {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: space-between;
+      min-height: 360px;
+    }
+
+    .bmi-center {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 8px 0 16px;
+    }
+
+    /* SLOT MACHINE */
+    .bmi-slot-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: visible;
+      height: 130px;
+      user-select: none;
+    }
+
+    .digit-col {
+      position: relative;
+      width: 72px;
+      height: 130px;
+      overflow: hidden;
+    }
+
+    .digit-col.dot-col {
+      width: 34px;
+    }
+
+    .digit-strip {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: none;
+    }
+
+    .digit-item {
+      font-family: 'BodyText', sans-serif;
+      font-size: 108px;
+      font-weight: 900;
+      line-height: 130px;
+      height: 130px;
+      color: var(--white);
+      text-align: center;
+      width: 100%;
+      opacity: 0.12;
+      transition: opacity 0.2s;
+    }
+
+    .digit-item.active-digit {
+      opacity: 1;
+    }
+
+    .dot-char {
+      font-family: 'BodyText', sans-serif;
+      font-size: 108px;
+      font-weight: 900;
+      line-height: 130px;
+      height: 130px;
+      color: var(--grey);
+      opacity: 0.4;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding-bottom: 14px;
+    }
+
+    .slot-fade-top,
+    .slot-fade-bottom {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 40px;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .slot-fade-top {
+      top: 0;
+      background: linear-gradient(to bottom, var(--card), transparent);
+    }
+
+    .slot-fade-bottom {
+      bottom: 0;
+      background: linear-gradient(to top, var(--card), transparent);
+    }
+
+    .bmi-slot-wrapper.idle .digit-item {
+      color: #2e302e;
+      opacity: 1;
+    }
+
+    .bmi-slot-wrapper.idle .dot-char {
+      color: #2e302e;
+      opacity: 1;
+    }
+
+    /* CATEGORY BADGE */
+    .cat-badge {
+      margin-top: 12px;
+      padding: 5px 22px;
+      border-radius: 30px;
+      font-family: 'BodyText', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.35s 0.15s, transform 0.35s 0.15s;
+    }
+
+    .cat-badge.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .cat-normal {
+      background: rgba(78, 201, 1, 0.12);
+      color: var(--neon);
+      border: 1px solid rgba(78, 201, 1, 0.3);
+    }
+
+    .cat-under {
+      background: rgba(74, 144, 217, 0.12);
+      color: #7bbfff;
+      border: 1px solid rgba(74, 144, 217, 0.3);
+    }
+
+    .cat-over {
+      background: rgba(240, 192, 64, 0.12);
+      color: #f0c040;
+      border: 1px solid rgba(240, 192, 64, 0.3);
+    }
+
+    .cat-obese {
+      background: rgba(232, 64, 64, 0.12);
+      color: #ff7878;
+      border: 1px solid rgba(232, 64, 64, 0.3);
+    }
+
+    .bmi-foot {
+      font-size: 13px;
+      color: #cccccc;
+      text-align: center;
+      line-height: 1.65;
+      max-width: 268px;
+      margin-top: 14px;
+      font-weight: 400;
+    }
+
+    /* SCALE BAR */
+    .scale-wrap {
+      width: 100%;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.4s 0.25s, transform 0.4s 0.25s;
+    }
+
+    .scale-wrap.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .scale-bar {
+      display: flex;
+      width: 100%;
+      height: 5px;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .sb {
+      flex: 1;
+    }
+
+    .sb1 {
+      background: var(--blue);
+    }
+
+    .sb2 {
+      background: var(--neon);
+    }
+
+    .sb3 {
+      background: var(--yellow);
+    }
+
+    .sb4 {
+      background: var(--red);
+    }
+
+    .scale-marker-wrap {
+      position: relative;
+      width: 100%;
+      height: 14px;
+      margin-bottom: 6px;
+      pointer-events: none;
+    }
+
+    .scale-marker {
+      position: absolute;
+      top: 2px;
+      width: 10px;
+      height: 10px;
+      background: var(--white);
+      border-radius: 50%;
+      border: 2px solid var(--black);
+      transform: translateX(-50%);
+      transition: left 0.7s cubic-bezier(0.34, 1.3, 0.64, 1);
+      left: 50%;
+    }
+
+    .scale-labels {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .sl {
+      font-size: 10px;
+      color: #cccccc;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    /* EMAIL SECTION */
+    .email-section {
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.4s 0.3s, transform 0.4s 0.3s;
+    }
+
+    .email-section.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .email-section .field-label {
+      margin-bottom: 10px;
+    }
+
+    .send-status {
+      font-size: 12px;
+      padding: 10px 14px;
+      border-radius: 8px;
+      margin-top: 10px;
+      display: none;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .send-status.show {
+      display: flex;
+    }
+
+    .send-status.success {
+      background: rgba(78, 201, 1, 0.12);
+      color: var(--neon);
+      border: 1px solid rgba(78, 201, 1, 0.3);
+    }
+
+    .send-status.error {
+      background: rgba(232, 64, 64, 0.12);
+      color: #ff7878;
+      border: 1px solid rgba(232, 64, 64, 0.3);
+    }
+
+    /* ERROR */
+    .shake {
+      animation: shake 0.4s cubic-bezier(.36, .07, .19, .97) both;
+    }
+
+    @keyframes shake {
+
+      10%,
+      90% {
+        transform: translateX(-2px);
+      }
+
+      20%,
+      80% {
+        transform: translateX(4px);
+      }
+
+      30%,
+      50%,
+      70% {
+        transform: translateX(-5px);
+      }
+
+      40%,
+      60% {
+        transform: translateX(5px);
+      }
+    }
+
+    .err-msg {
+      font-size: 11px;
+      color: var(--red);
+      margin-top: -14px;
+      margin-bottom: 12px;
+      height: 0;
+      overflow: hidden;
+      transition: height 0.2s;
+      font-weight: 600;
+    }
+
+    .err-msg.show {
+      height: 18px;
+    }
+
+    /* CHAT WIDGET */
+    .chat-toggle-btn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: var(--neon);
+      color: var(--black);
+      border: none;
+      padding: 14px 24px;
+      border-radius: 30px;
+      font-family: 'BodyText', sans-serif;
+      font-weight: 800;
+      font-size: 15px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(78, 201, 1, 0.3);
+      z-index: 1000;
+      transition: transform 0.2s;
+    }
+    .chat-toggle-btn:hover {
+      transform: scale(1.05);
+    }
+    
+    .chat-widget {
+      position: fixed;
+      bottom: 90px;
+      right: 30px;
+      width: 350px;
+      height: 500px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      z-index: 1000;
+      transform: translateY(20px);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 0.3s cubic-bezier(0.4,0,0.2,1), opacity 0.3s;
+    }
+    .chat-widget.show {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: all;
+    }
+    
+    .chat-header {
+      padding: 16px;
+      background: #151615;
+      border-bottom: 1px solid var(--border);
+      border-radius: 16px 16px 0 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .chat-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--white);
+    }
+    .chat-avatar {
+      background: var(--neon);
+      color: var(--black);
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 900;
+    }
+    .chat-close {
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 16px;
+      transition: color 0.2s;
+    }
+    .chat-close:hover {
+      color: var(--white);
+    }
+    
+    .chat-body {
+      flex: 1;
+      padding: 16px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .chat-body::-webkit-scrollbar {
+      width: 6px;
+    }
+    .chat-body::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 3px;
+    }
+    
+    .message {
+      max-width: 85%;
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-size: 13.5px;
+      line-height: 1.5;
+    }
+    .ai-msg {
+      background: #232523;
+      color: var(--grey);
+      align-self: flex-start;
+      border-bottom-left-radius: 4px;
+    }
+    .user-msg {
+      background: rgba(78, 201, 1, 0.15);
+      color: var(--white);
+      border: 1px solid rgba(78, 201, 1, 0.3);
+      align-self: flex-end;
+      border-bottom-right-radius: 4px;
+    }
+    
+    .chat-input-area {
+      padding: 14px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 10px;
+    }
+    .chat-input-area input {
+      flex: 1;
+      background: var(--input-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 10px 16px;
+      color: var(--white);
+      font-family: 'BodyText', sans-serif;
+      outline: none;
+    }
+    .chat-input-area input:focus {
+      border-color: var(--neon);
+    }
+    .chat-send-btn {
+      background: var(--neon);
+      color: var(--black);
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .chat-send-btn:hover {
+      opacity: 0.9;
+    }
+    
+    @media (max-width: 600px) {
+      .chat-widget {
+        bottom: 0; right: 0;
+        width: 100%; height: 100%;
+        border-radius: 0;
+        transform: translateY(100%);
+      }
+      .chat-header { border-radius: 0; }
+    }
+
+    /* ===== NAVBAR ===== */
+	.navbar {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		z-index: 100;
+		display: flex;
+		align-items: center;
+		padding: 18px 40px;
+		box-sizing: border-box;
+	    background: linear-gradient(to bottom, rgba(0,0,0,0.7), transparent);
+	}
+	a {
+		text-decoration: none;
+		color: #CCCCCC;
+}
+
+.logo {
+	flex: 1;
+}
+.logo img {
+	height: 30px;
+	width: auto;
+}
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .navigationbar {
+	display: flex;
+	list-style: none;
+	gap: 32px;
+	margin: 0;
+	padding: 0;
+	margin-left: auto; 
+	margin-right: 50px; 
+}
+.navigationbar li {
+	font-family: "BodyText", sans-serif;
+	font-size: 13px;
+	color: #cccccc;
+	cursor: pointer;
+	transition: color 0.3s ease;
+	position: relative;
+}
+.navigationbar li:hover {
+	color: #FFFFFF;
+}
+.navigationbar li.active {
+	color: #57E201;
+	font-weight: bold;
+}
+
+.has-dropdown {
+	position: relative;
+}
+
+.dropdown-menu {
+	display: none;
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	transform: translateX(-50%);
+	background-color: #1e1f1e;
+	border: 1px solid #2e2f2e;
+	border-radius: 8px;
+	padding: 10px;
+	min-width: 210px;
+	box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+	z-index: 200;
+}
+
+.has-dropdown:hover .dropdown-menu {
+	display: block;
+}
+
+.dropdown-item {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	padding: 10px 12px;
+	border-radius: 8px;
+	text-decoration: none;
+	transition: background-color 0.2s ease;
+}
+.dropdown-item:hover {
+	background-color: #2a2b2a;
+}
+
+.dropdown-title {
+	font-family: "BodyText", sans-serif;
+	font-size: 13px;
+	font-weight: normal;
+	color: white;
+	margin: 0 0 2px 0;
+}
+
+.SignUp {
+    background-color: #4EC901;
+    font-family: "BodyText", sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 6px;
+    border: none;
+    padding: 8px 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    white-space: nowrap;
+    margin-left: auto;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    color: #111; 
+}
+
+.SignUp:hover {
+    background-color: #128700;
+    color: #FFFFFF; 
+}
+.navigationbar li.active {
+	color: #57E201;
+	font-weight: bold;
+}	  
+    /* ===== FOOTER ===== */
+	.navbar { padding: 15px 20px; gap: 20px; }
+	.section3, .section4, .bmi-section, .testimonials-section, .footer { padding: 50px 20px; }
+	.bannertext { padding: 100px 20px 40px 20px; }
+}
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="logo">
+      <img src="Logo-v2.png" alt="logo">
+    </div>
+    <div class="nav-right">
+      <ul class="navigationbar">
+		  <li><a href="index.html">Home</a></li>
+        <li><a href="programs.html">Programs</a></li>
+        <li class="has-dropdown active">
+          Products <i class="fa fa-chevron-down"></i>
+          <div class="dropdown-menu">
+            <a href="bmi.html" class="dropdown-item">
+              <div>
+                <p class="dropdown-title">BMI Calculator</p>
+              </div>
+            </a>
+          </div>
+        </li>
+        <li><a href="membership.html">Membership</a></li>
+        <li><a href="about.html">About Us</a></li>
+      </ul>
+      <a href="login.html" class="SignUp">Sign In</a>
+    </div>
+  </nav>
+
+  <div class="wrapper" style="padding-top: 100px;">
+
+    <div class="header">
+      <h1 class="page-title"><span style="color: var(--neon);">BODY</span> MASS INDEX CALCULATOR</h1>
+      <p class="page-desc">With our easy-to-use BMI calculator, you can quickly determine your body mass index and get
+        insights into your overall body fat and potential health risks.</p>
+    </div>
+
+    <div class="grid">
+
+      <!-- LEFT -->
+      <div class="panel">
+        <div class="panel-title">Your Body Measurements</div>
+
+        <div class="field-label">Gender</div>
+        <div class="gender-row">
+          <button class="g-btn" id="gFemale" onclick="setGender('female')"><span>Female</span></button>
+          <button class="g-btn active" id="gMale" onclick="setGender('male')"><span>Male</span></button>
+          <button class="g-btn" id="gOther" onclick="setGender('other')"><span>Other</span></button>
+        </div>
+
+        <div class="field-label">Weight</div>
+        <div class="input-wrap">
+          <input type="number" id="weightInput" min="1" max="450" placeholder="Enter any number from 1 till 450"
+            oninput="clearErr('weight')" />
+          <span class="input-unit">kg</span>
+        </div>
+        <div class="err-msg" id="weightErr">Please enter a valid weight (1–450 kg)</div>
+
+        <div class="field-label">Height</div>
+        <div class="input-wrap">
+          <input type="number" id="heightInput" min="1" max="300" placeholder="Enter any number from 1 till 300"
+            oninput="clearErr('height')" />
+          <span class="input-unit">cm</span>
+        </div>
+        <div class="err-msg" id="heightErr">Please enter a valid height (1–300 cm)</div>
+
+        <button class="calc-btn" onclick="calcBMI()">Calculate BMI</button>
+      </div>
+
+      <!-- RIGHT -->
+      <div class="panel result-panel">
+        <div class="panel-title">Body Mass Index</div>
+
+        <div class="bmi-center">
+          <div class="bmi-slot-wrapper idle" id="slotWrapper">
+            <div class="slot-fade-top"></div>
+            <div class="slot-fade-bottom"></div>
+          </div>
+          <div class="cat-badge" id="catBadge"></div>
+          <p class="bmi-foot" id="bmiFoot">Please, enter information about your weight and height and we will calculate
+            your BMI</p>
+        </div>
+
+        <div class="scale-wrap" id="scaleWrap">
+          <div class="scale-bar">
+            <div class="sb sb1"></div>
+            <div class="sb sb2"></div>
+            <div class="sb sb3"></div>
+            <div class="sb sb4"></div>
+          </div>
+          <div class="scale-marker-wrap">
+            <div class="scale-marker" id="scaleDot"></div>
+          </div>
+          <div class="scale-labels">
+            <span class="sl">Under</span>
+            <span class="sl">Normal</span>
+            <span class="sl">Over</span>
+            <span class="sl">Obese</span>
+          </div>
+        </div>
+
+        <!-- EMAIL SECTION -->
+        <div class="email-section" id="emailSection">
+          <div class="field-label">Get Your Report</div>
+          <div class="input-wrap">
+            <input type="email" id="emailInput" placeholder="Enter your email address" oninput="clearErr('email')" />
+          </div>
+          <div class="err-msg" id="emailErr">Please enter a valid email address</div>
+          <button class="send-btn" id="sendBtn" onclick="sendReport()">
+            <span id="sendBtnText">Send me Report</span>
+          </button>
+          <div class="send-status" id="sendStatus"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CHAT WIDGET -->
+  <div class="chat-widget" id="chatWidget">
+    <div class="chat-header">
+      <div class="chat-title">
+        <span class="chat-avatar">AI</span>
+        <span>Fitness Assistant</span>
+      </div>
+      <button class="chat-close" onclick="toggleChat()">✕</button>
+    </div>
+    <div class="chat-body" id="chatBody">
+      <div class="message ai-msg">Hi there! I'm your AI fitness assistant. Need help understanding your BMI or want some health tips?</div>
+    </div>
+    <div class="chat-input-area">
+      <input type="text" id="chatInput" placeholder="Ask me anything..." onkeypress="handleChatKeyPress(event)" />
+      <button class="chat-send-btn" onclick="sendMessage()">➤</button>
+    </div>
+  </div>
+
+  <button class="chat-toggle-btn" id="chatToggleBtn" onclick="toggleChat()">
+    💬 Chat
+  </button>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+        <div class="footer-col">
+            <img src="Logo-v2.png" alt="ZF Logo" class="footer-logo-img">
+            <p class="footer-tagline">Your Fitness Journey Starts Here. We help you build strength, confidence, and a healthier life.</p>
+            <div class="vip-social-links">
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+        <div class="footer-col">
+            <h4 class="footer-col-title">Quick Links</h4>
+            <ul class="footer-links">
+                <li><a href="membership.html">Membership</a></li>
+                <li><a href="programs.html">Programs</a></li>
+                <li><a href="bmi.html">BMI Calculator</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4 class="footer-col-title">Services</h4>
+            <ul class="footer-links">
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4 class="footer-col-title">Newsletter</h4>
+            <p class="footer-tagline" style="margin-bottom: 0;">Subscribe for fitness tips and exclusive offers.</p>
+            <form class="vip-newsletter-form">
+                <input type="email" placeholder="Your Email Address" required>
+                <button type="submit"><i class="fa fa-paper-plane"></i></button>
+            </form>
+        </div>
+    </div>
+    <div class="footer-copy">
+        <p>&copy; 2026 ZeroFitness. All rights reserved.</p>
+        <p style="margin: 0;">Designed for Excellence</p>
+    </div>
+</footer>
+
+
+  <script>
+    let lastBMIResult = null;
+
+    /* GENDER */
+    function setGender(g) {
+      ['gFemale', 'gMale', 'gOther'].forEach(id => document.getElementById(id).classList.remove('active'));
+      document.getElementById({ female: 'gFemale', male: 'gMale', other: 'gOther' }[g]).classList.add('active');
+    }
+
+    /* ERROR */
+    function showErr(f) {
+      document.getElementById(f + 'Err').classList.add('show');
+      const inp = document.getElementById(f + 'Input');
+      inp.classList.remove('shake'); void inp.offsetWidth; inp.classList.add('shake');
+      inp.style.borderColor = '#e84040';
+      inp.style.boxShadow = '0 0 0 3px rgba(232,64,64,0.1)';
+    }
+    function clearErr(f) {
+      document.getElementById(f + 'Err').classList.remove('show');
+      const inp = document.getElementById(f + 'Input');
+      inp.style.borderColor = ''; inp.style.boxShadow = '';
+    }
+
+    /* SLOT MACHINE BUILD */
+    const DIGITS = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
+    const slotWrapper = document.getElementById('slotWrapper');
+
+    function getItemH() {
+      const el = document.querySelector('.digit-item');
+      return el ? el.getBoundingClientRect().height || 120 : 120;
+    }
+
+    function buildSlot(id, isDot) {
+      const col = document.createElement('div');
+      col.className = isDot ? 'digit-col dot-col' : 'digit-col';
+      col.id = 'col_' + id;
+      if (isDot) {
+        const d = document.createElement('div');
+        d.className = 'dot-char'; d.textContent = '.';
+        col.appendChild(d);
+      } else {
+        const strip = document.createElement('div');
+        strip.className = 'digit-strip';
+        strip.id = 'strip_' + id;
+        DIGITS.forEach((d, i) => {
+          const item = document.createElement('div');
+          item.className = 'digit-item';
+          item.id = 'digit_' + id + '_' + i;
+          item.textContent = d;
+          strip.appendChild(item);
+        });
+        col.appendChild(strip);
+      }
+      return col;
+    }
+
+    ['d0', 'd1', 'dot', 'd2'].forEach(id => {
+      slotWrapper.appendChild(buildSlot(id, id === 'dot'));
+    });
+
+    function setSlotDigit(id, digit, animate) {
+      const strip = document.getElementById('strip_' + id);
+      if (!strip) return;
+      DIGITS.forEach((_, i) => {
+        const el = document.getElementById('digit_' + id + '_' + i);
+        if (el) el.classList.toggle('active-digit', i === digit);
+      });
+      const ITEM_H = getItemH();
+      const targetTop = -(digit * ITEM_H);
+      if (animate) {
+        const spinStart = targetTop - (2 * DIGITS.length * ITEM_H) - (ITEM_H * 3);
+        strip.style.transition = 'none';
+        strip.style.top = spinStart + 'px';
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          strip.style.transition = 'top 0.6s cubic-bezier(0.22,1,0.36,1)';
+          strip.style.top = targetTop + 'px';
+        }));
+      } else {
+        strip.style.transition = 'none';
+        strip.style.top = targetTop + 'px';
+      }
+    }
+
+    /* init 0.0 */
+    setTimeout(() => {
+      setSlotDigit('d0', 0, false);
+      setSlotDigit('d1', 0, false);
+      setSlotDigit('d2', 0, false);
+    }, 50);
+
+    /* MAIN CALC */
+    function calcBMI() {
+      const w = parseFloat(document.getElementById('weightInput').value);
+      const h = parseFloat(document.getElementById('heightInput').value);
+
+      let ok = true;
+      if (!w || w < 1 || w > 450) { showErr('weight'); ok = false; }
+      if (!h || h < 1 || h > 300) { showErr('height'); ok = false; }
+      if (!ok) return;
+
+      const hm = h / 100;
+      const bmi = w / (hm * hm);
+      const rounded = Math.round(bmi * 10) / 10;
+
+      const str = rounded.toFixed(1);
+      const [intPart, decPart] = str.split('.');
+      const padded = intPart.padStart(2, '0');
+      const d0 = parseInt(padded[0]);
+      const d1 = parseInt(padded[1]);
+      const d2 = parseInt(decPart[0]);
+
+      slotWrapper.classList.remove('idle');
+
+      setTimeout(() => setSlotDigit('d0', d0, true), 0);
+      setTimeout(() => setSlotDigit('d1', d1, true), 90);
+      setTimeout(() => setSlotDigit('d2', d2, true), 180);
+
+      const badge = document.getElementById('catBadge');
+      const foot = document.getElementById('bmiFoot');
+      const scale = document.getElementById('scaleWrap');
+      const dot = document.getElementById('scaleDot');
+      const emailSection = document.getElementById('emailSection');
+
+      let cat, cls, tip, pct;
+      if (bmi < 18.5) {
+        cat = 'Underweight'; cls = 'cat-badge show cat-under';
+        tip = 'Your BMI suggests you may be underweight. Consider consulting a healthcare professional.';
+        pct = Math.max(2, (bmi / 18.5) * 25);
+      } else if (bmi < 25) {
+        cat = 'Normal weight'; cls = 'cat-badge show cat-normal';
+        tip = 'Great! Your BMI is within the healthy range. Keep up your current lifestyle!';
+        pct = 25 + ((bmi - 18.5) / 6.5) * 25;
+      } else if (bmi < 30) {
+        cat = 'Overweight'; cls = 'cat-badge show cat-over';
+        tip = 'Your BMI is above normal. A balanced diet and regular exercise can help.';
+        pct = 50 + ((bmi - 25) / 5) * 25;
+      } else {
+        cat = 'Obese'; cls = 'cat-badge show cat-obese';
+        tip = 'Your BMI indicates obesity. Please consult a healthcare professional for personalised advice.';
+        pct = Math.min(98, 75 + ((bmi - 30) / 10) * 25);
+      }
+
+      badge.textContent = cat;
+      badge.className = cls;
+      foot.textContent = tip;
+      scale.classList.add('show');
+      emailSection.classList.add('show');
+      setTimeout(() => { dot.style.left = pct + '%'; }, 60);
+
+      // Store result for report generation
+      lastBMIResult = {
+        bmi: rounded,
+        category: cat,
+        weight: w,
+        height: h,
+        gender: document.querySelector('.g-btn.active').textContent.trim(),
+        tip: tip
+      };
+    }
+
+    /* SEND REPORT */
+    function validateEmail(email) {
+      const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return re.test(email);
+    }
+
+    async function sendReport() {
+      const email = document.getElementById('emailInput').value.trim();
+
+      if (!validateEmail(email)) {
+        showErr('email');
+        return;
+      }
+
+      if (!lastBMIResult) {
+        const statusEl = document.getElementById('sendStatus');
+        statusEl.textContent = 'Please calculate your BMI first';
+        statusEl.className = 'send-status show error';
+        return;
+      }
+
+      const sendBtn = document.getElementById('sendBtn');
+      const sendBtnText = document.getElementById('sendBtnText');
+
+      sendBtn.classList.add('loading');
+      sendBtnText.textContent = '⏳ Sending...';
+
+      try {
+        const response = await fetch('http://localhost:3000/send-report', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: email,
+            bmi: lastBMIResult.bmi,
+            category: lastBMIResult.category,
+            weight: lastBMIResult.weight,
+            height: lastBMIResult.height,
+            gender: lastBMIResult.gender,
+            tip: lastBMIResult.tip
+          })
+        });
+
+        const data = await response.json();
+
+        const statusEl = document.getElementById('sendStatus');
+
+        if (response.ok) {
+          sendBtn.classList.remove('loading');
+          sendBtn.classList.add('success');
+          sendBtnText.textContent = '✅ Report Sent!';
+          statusEl.textContent = 'Your BMI report has been sent to your email successfully!';
+          statusEl.className = 'send-status show success';
+
+          setTimeout(() => {
+            sendBtn.classList.remove('success');
+            sendBtnText.textContent = '📧 Send me Report';
+            document.getElementById('emailInput').value = '';
+          }, 3000);
+        } else {
+          sendBtn.classList.remove('loading');
+          sendBtn.classList.add('error');
+          sendBtnText.textContent = '❌ Error';
+          statusEl.textContent = data.message || 'Failed to send report. Please try again.';
+          statusEl.className = 'send-status show error';
+
+          setTimeout(() => {
+            sendBtn.classList.remove('error');
+            sendBtnText.textContent = '📧 Send me Report';
+          }, 3000);
+        }
+      } catch (error) {
+        sendBtn.classList.remove('loading');
+        sendBtn.classList.add('error');
+        sendBtnText.textContent = '❌ Error';
+
+        const statusEl = document.getElementById('sendStatus');
+        statusEl.textContent = 'Connection error. Please make sure the backend server is running.';
+        statusEl.className = 'send-status show error';
+
+        setTimeout(() => {
+          sendBtn.classList.remove('error');
+          sendBtnText.textContent = '📧 Send me Report';
+        }, 3000);
+      }
+    }
+
+    /* Enter key */
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Enter') {
+        if (document.getElementById('emailInput') === document.activeElement) {
+          sendReport();
+        } else {
+          calcBMI();
+        }
+      }
+    });
+    /* CHAT WIDGET LOGIC */
+    let chatHistory = [];
+    
+    function toggleChat() {
+      const widget = document.getElementById('chatWidget');
+      widget.classList.toggle('show');
+    }
+
+    function handleChatKeyPress(e) {
+      if (e.key === 'Enter') {
+        sendMessage();
+      }
+    }
+
+    function appendMessage(text, sender) {
+      const body = document.getElementById('chatBody');
+      const msgDiv = document.createElement('div');
+      msgDiv.className = `message ${sender}-msg`;
+      msgDiv.textContent = text;
+      body.appendChild(msgDiv);
+      body.scrollTop = body.scrollHeight;
+    }
+
+    async function sendMessage() {
+      const input = document.getElementById('chatInput');
+      const text = input.value.trim();
+      if (!text) return;
+      
+      appendMessage(text, 'user');
+      input.value = '';
+      
+      // If user has calculated BMI, append it to context in chat history, but not visibly
+      const historyContext = lastBMIResult 
+        ? [...chatHistory, { role: "user", parts: [{ text: `(System Context: User's BMI is ${lastBMIResult.bmi}, category ${lastBMIResult.category}, weight ${lastBMIResult.weight}, height ${lastBMIResult.height})` }] }] 
+        : chatHistory;
+
+      // Add user message to history
+      chatHistory.push({ role: "user", parts: [{ text }] });
+      
+      const typingMsgId = 'typing-' + Date.now();
+      const body = document.getElementById('chatBody');
+      const msgDiv = document.createElement('div');
+      msgDiv.className = `message ai-msg`;
+      msgDiv.id = typingMsgId;
+      msgDiv.textContent = '...';
+      body.appendChild(msgDiv);
+      body.scrollTop = body.scrollHeight;
+
+      try {
+        const response = await fetch('http://localhost:3000/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: text, history: historyContext })
+        });
+        
+        const data = await response.json();
+        
+        document.getElementById(typingMsgId).remove();
+        
+        if (data.success) {
+          appendMessage(data.text, 'ai');
+          chatHistory.push({ role: "model", parts: [{ text: data.text }] });
+        } else {
+          appendMessage(data.error || 'Failed to connect to AI assistant.', 'ai');
+        }
+      } catch (err) {
+        document.getElementById(typingMsgId).remove();
+        appendMessage('Connection error. Is the server running?', 'ai');
+      }
+    }
+  </script>
+    <script src="mobile-nav.js"></script>
+</body>
+
+</html>
+
+

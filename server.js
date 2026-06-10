@@ -253,7 +253,7 @@ app.post('/send-report', async (req, res) => {
 });
 
 app.get('/bmi', (req, res) => {
-    res.sendFile(path.join(__dirname, 'bmi-calculator-updated.html'));
+    res.sendFile(path.join(__dirname, 'bmi.html'));
 });
 
 // Chatbot endpoint
