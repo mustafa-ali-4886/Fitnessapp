@@ -14,6 +14,15 @@ img, video, iframe {
     height: auto !important;
 }
 
+/* Fix background banner images/videos getting squished by the above rule */
+.banner img, .banner video {
+    height: 100% !important;
+    object-fit: cover !important;
+    position: absolute !important;
+    top: 0;
+    left: 0;
+}
+
 /* Mobile Menu Icon Base */
 .mobile-menu-icon {
     display: none;
