@@ -80,6 +80,32 @@ img, video, iframe {
         display: flex !important;
     }
 
+    /* FIX: Hero Text and Image for Home & Membership */
+    .line-1, .line-2, .line-3, .pickyour, .perfectplan, .heading3 {
+        font-size: 38px !important;
+        line-height: 1.1 !important;
+        display: block; /* Ensure they break nicely if needed */
+    }
+    
+    .Bannertext {
+        font-size: 15px !important;
+        line-height: 1.4 !important;
+        margin-top: 15px !important;
+    }
+    
+    .bannertext {
+        padding: 100px 15px 40px 15px !important;
+    }
+
+    /* Make the background image fully visible instead of covered in black */
+    .banner::after {
+        background: linear-gradient(to top, rgba(0,0,0,0.95) 10%, rgba(0,0,0,0.6) 50%, rgba(0,0,0,0.1) 100%) !important;
+    }
+    
+    .hero {
+        min-height: 80vh !important;
+    }
+
     /* Program Rows and Feature Grids */
     .program-row, .featured-programs-grid, .trainer-new-grid, .row, .cards-container, .pricing-grid, .info-section {
         flex-direction: column !important;
