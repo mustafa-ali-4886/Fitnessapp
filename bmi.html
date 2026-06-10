@@ -43,16 +43,11 @@
       --blue: #4a90d9;
     }
 
-    html,
-    body {
-      min-height: 100%;
-      background: var(--black);
-      color: var(--white);
-      font-family: 'BodyText', sans-serif;
-      overflow-x: hidden;
-    }
 
     body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
       animation: pageFade 0.65s cubic-bezier(0.4, 0, 0.2, 1) both;
     }
 
@@ -72,9 +67,11 @@
     .wrapper {
       max-width: 980px;
       margin: 0 auto;
-      padding: 52px 32px 64px;
+      padding: 120px 32px 64px;
       position: relative;
       z-index: 1;
+      flex: 1 0 auto;
+      width: 100%;
     }
 
     /* HEADER */
