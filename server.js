@@ -42,8 +42,12 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Serve static frontend files
-app.use(express.static(__dirname));
+// Serve static frontend files and disable caching for development
+app.use(express.static(__dirname, {
+    setHeaders: function (res, path) {
+        res.set('Cache-Control', 'no-store, no-cache, must-revalidate, private');
+    }
+}));
 
 // Serve contact page on main route
 app.get('/', (req, res) => {
